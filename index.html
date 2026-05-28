@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOLE — A Wedding Celebration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1E4D3A;
+    --forest-mid: #2D6A56;
+    --forest-light: #3D8A70;
+    --forest-pale: #EAF3EF;
+    --forest-ultra: #F2F8F5;
+    --gold: #B8962E;
+    --gold-light: #D4AF5A;
+    --gold-pale: #FBF6EC;
+    --gold-border: #C9A84C;
+    --white: #FFFFFF;
+    --cream: #FAFAF6;
+    --ink: #18181A;
+    --ink-mid: #2C2C2E;
+    --muted: #717068;
+    --muted-light: #9B9B91;
+    --border-faint: rgba(184,150,46,0.12);
+    --border-light: rgba(184,150,46,0.22);
+    --border-mid: rgba(184,150,46,0.38);
+    --border-strong: rgba(184,150,46,0.58);
+    --shadow-sm: 0 1px 12px rgba(28,28,26,0.06);
+    --shadow-md: 0 4px 28px rgba(28,28,26,0.09);
+    --shadow-gold: 0 2px 20px rgba(184,150,46,0.12);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', system-ui, sans-serif;
+    --r-sm: 5px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-xl: 22px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh;
+  }
+
+  /* ─────────────────────────────
+     GEO PATTERN BACKGROUND
+  ───────────────────────────── */
+  .geo-bg {
+    background-color: var(--cream);
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23B8962E' stroke-width='0.35' opacity='0.18'%3E%3Crect x='8' y='8' width='64' height='64'/%3E%3Crect x='20' y='20' width='40' height='40'/%3E%3Cline x1='8' y1='8' x2='20' y2='20'/%3E%3Cline x1='72' y1='8' x2='60' y2='20'/%3E%3Cline x1='8' y1='72' x2='20' y2='60'/%3E%3Cline x1='72' y1='72' x2='60' y2='60'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ─────────────────────────────
+     TYPOGRAPHY
+  ───────────────────────────── */
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.18;
+    color: var(--ink);
+  }
+  h1 { font-size: clamp(2.4rem, 8vw, 3.6rem); }
+  h2 { font-size: clamp(1.65rem, 5vw, 2.3rem); }
+  h3 { font-size: clamp(1.15rem, 3.5vw, 1.45rem); }
+  p { color: var(--muted); font-size: 0.93rem; line-height: 1.75; }
+
+  /* ─────────────────────────────
+     GOLD DIVIDER
+  ───────────────────────────── */
+  .divider {
+    display: flex; align-items: center; gap: 14px;
+    margin: 1.5rem 0;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1;
+    height: 0.5px; background: linear-gradient(90deg, transparent, var(--gold-border));
+  }
+  .divider::after { background: linear-gradient(90deg, var(--gold-border), transparent); }
+  .divider span {
+    font-family: var(--serif); font-size: 1rem; color: var(--gold);
+    letter-spacing: 0.1em; font-style: italic; white-space: nowrap;
+  }
+
+  /* ─────────────────────────────
+     CORNER ORNAMENTS
+  ───────────────────────────── */
+  .framed { position: relative; }
+  .framed .c { position: absolute; width: 16px; height: 16px; border-color: var(--gold-border); border-style: solid; }
+  .framed .c.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; border-radius: 3px 0 0 0; }
+  .framed .c.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; border-radius: 0 3px 0 0; }
+  .framed .c.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; border-radius: 0 0 0 3px; }
+  .framed .c.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; border-radius: 0 0 3px 0; }
+
+  /* ─────────────────────────────
+     NAVIGATION
+  ───────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(250,250,246,0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 0.5px solid var(--border-faint);
+    padding: 0 1.5rem;
+  }
+  .nav-inner {
+    max-width: 940px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-brand {
+    font-family: var(--serif); font-size: 1.65rem; font-weight: 500;
+    color: var(--forest); letter-spacing: 0.15em; text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-brand span { color: var(--gold); }
+  .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+  .nav-links button {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 0.72rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-mid); font-weight: 500;
+    padding: 0.4rem 0.75rem; border-radius: var(--r-sm);
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links button:hover { color: var(--forest); background: var(--forest-ultra); }
+  .nav-links button.active { color: var(--forest); }
+  .nav-hamburger {
+    display: none; background: none;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--r-sm); padding: 7px 8px; cursor: pointer;
+  }
+  .nav-hamburger span {
+    display: block; width: 17px; height: 1.5px;
+    background: var(--ink); margin: 3.5px 0; transition: 0.2s;
+  }
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column; gap: 0;
+      position: absolute; top: 60px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 0.5px solid var(--border-faint);
+      padding: 0.4rem 0;
+      box-shadow: var(--shadow-md);
+    }
+    .nav-links.open button {
+      display: block; width: 100%;
+      text-align: left; padding: 0.9rem 1.5rem;
+      border-radius: 0;
+      border-bottom: 0.5px solid var(--border-faint);
+    }
+  }
+
+  /* ─────────────────────────────
+     PAGE SYSTEM
+  ───────────────────────────── */
+  .page { display: none; min-height: calc(100dvh - 60px); }
+  .page.active { display: block; animation: pageFade 0.38s ease both; }
+
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-inner {
+    max-width: 760px; margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* ─────────────────────────────
+     ACCESS SCREEN
+  ───────────────────────────── */
+  #screen-access {
+    min-height: 100dvh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2rem 1.5rem;
+  }
+  .access-box { width: 100%; max-width: 400px; text-align: center; }
+  .access-logo {
+    font-family: var(--serif); font-size: 3.5rem; font-weight: 500;
+    color: var(--forest); letter-spacing: 0.2em; margin-bottom: 0.2rem;
+  }
+  .access-logo span { color: var(--gold); }
+  .access-tagline {
+    font-family: var(--serif); font-style: italic;
+    color: var(--muted); font-size: 1.05rem; margin-bottom: 2.8rem;
+  }
+  .access-card {
+    border: 1px solid var(--border-mid);
+    border-radius: var(--r-xl);
+    padding: 2.5rem 2rem 2rem;
+    background: var(--white);
+    box-shadow: var(--shadow-gold), 0 8px 40px rgba(28,28,26,0.06);
+  }
+  .access-label {
+    display: block; font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500; margin-bottom: 0.6rem; text-align: left;
+  }
+  .access-input {
+    width: 100%; padding: 0.88rem 1rem;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--r-sm);
+    font-family: var(--sans); font-size: 0.95rem;
+    background: var(--cream); color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+  }
+  .access-input:focus {
+    border-color: var(--forest);
+    box-shadow: 0 0 0 3px rgba(45,106,86,0.10);
+  }
+  .access-input.error { border-color: #c94040; }
+  .access-btn {
+    display: block; width: 100%; margin-top: 1.1rem;
+    padding: 1rem; cursor: pointer;
+    background: var(--forest); color: var(--gold-light);
+    border: none; border-radius: var(--r-sm);
+    font-family: var(--sans); font-size: 0.78rem;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 500; transition: background 0.2s, transform 0.1s;
+  }
+  .access-btn:hover { background: var(--forest-light); }
+  .access-btn:active { transform: scale(0.99); }
+  .access-note {
+    font-size: 0.75rem; color: var(--muted-light);
+    margin-top: 1.1rem; line-height: 1.6; text-align: center;
+  }
+  .access-footer { margin-top: 2.8rem; }
+  .access-footer p { font-size: 0.75rem; color: var(--muted-light); margin-top: 0.4rem; }
+
+  /* ─────────────────────────────
+     PAGE HEADER COMPONENT
+  ───────────────────────────── */
+  .page-header { margin-bottom: 2.5rem; }
+  .page-header .eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 0.4rem;
+  }
+  .page-header h2 { margin-bottom: 0.25rem; }
+  .page-header p { max-width: 520px; }
+
+  /* ─────────────────────────────
+     HOME PAGE
+  ───────────────────────────── */
+  .welcome-hero {
+    text-align: center; margin-bottom: 2.5rem;
+  }
+  .welcome-hero .eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 0.75rem;
+  }
+  .welcome-hero h1 { font-style: italic; margin-bottom: 0.5rem; }
+  .welcome-hero .guest-name {
+    font-family: var(--sans); font-size: 0.78rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.5rem;
+  }
+
+  /* QR Pass */
+  .qr-card {
+    background: var(--white); border: 1px solid var(--border-light);
+    border-radius: var(--r-xl); padding: 2rem;
+    text-align: center; box-shadow: var(--shadow-gold);
+    position: relative; overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .qr-card::after {
+    content: 'ENTRY PASS';
+    position: absolute; top: 18px; right: -24px;
+    background: var(--forest); color: var(--gold-light);
+    font-size: 0.58rem; letter-spacing: 0.16em;
+    padding: 4px 38px; transform: rotate(45deg);
+    font-family: var(--sans); font-weight: 600;
+  }
+  .qr-label {
+    font-family: var(--sans); font-size: 0.68rem;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 1.25rem;
+  }
+  .qr-frame {
+    width: 148px; height: 148px; margin: 0 auto 1.25rem;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--r-md); padding: 10px;
+    background: white; display: flex; align-items: center; justify-content: center;
+  }
+  .qr-frame svg { width: 100%; height: 100%; }
+  .qr-name { font-family: var(--serif); font-size: 1.45rem; color: var(--ink); font-style: italic; }
+  .qr-instruction { font-size: 0.76rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* Info grid */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  @media (max-width: 400px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card {
+    background: var(--white); border: 1px solid var(--border-faint);
+    border-left: 2px solid var(--gold-border);
+    border-radius: var(--r-md); padding: 1.2rem;
+  }
+  .info-card .label {
+    font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 0.25rem;
+  }
+  .info-card .value {
+    font-family: var(--serif); font-size: 1.3rem; color: var(--ink);
+  }
+
+  /* Venue card */
+  .venue-card {
+    background: var(--white); border: 1px solid var(--border-light);
+    border-radius: var(--r-lg); padding: 1.5rem; margin-bottom: 1.75rem;
+  }
+  .venue-card .vcard-title {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 1rem;
+  }
+  .venue-row {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 0.65rem; font-size: 0.9rem; color: var(--ink-mid);
+  }
+  .venue-row .v-icon {
+    width: 18px; flex-shrink: 0;
+    color: var(--gold); font-size: 0.9rem; margin-top: 2px;
+    text-align: center;
+  }
+  .map-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 1rem; padding: 0.6rem 1.25rem;
+    border: 1px solid var(--forest); border-radius: var(--r-sm);
+    font-family: var(--sans); font-size: 0.75rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--forest); text-decoration: none; font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+  }
+  .map-btn:hover { background: var(--forest); color: white; }
+
+  /* Timeline */
+  .timeline-section { margin-top: 2.5rem; }
+  .timeline { position: relative; padding-left: 2rem; margin-top: 1.25rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 5px; top: 4px; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--gold-border), transparent);
+  }
+  .tl-item { position: relative; margin-bottom: 1.6rem; }
+  .tl-item::before {
+    content: ''; position: absolute; left: -2rem; top: 5px;
+    width: 10px; height: 10px;
+    border: 1.5px solid var(--gold-border);
+    border-radius: 50%; background: var(--cream);
+  }
+  .tl-time {
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 0.1rem;
+  }
+  .tl-event { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); }
+  .tl-desc { font-size: 0.83rem; color: var(--muted); margin-top: 0.1rem; }
+
+  /* ─────────────────────────────
+     ACCOMMODATIONS PAGE
+  ───────────────────────────── */
+  .hotel-card {
+    background: var(--white); border: 1px solid var(--border-faint);
+    border-radius: var(--r-lg); padding: 1.5rem;
+    margin-bottom: 1rem; box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .hotel-card:hover { box-shadow: var(--shadow-gold); border-color: var(--border-light); }
+  .hotel-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+  .hotel-name { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); }
+  .hotel-stars { color: var(--gold); font-size: 0.75rem; letter-spacing: 1.5px; margin-top: 4px; }
+  .hotel-meta { display: flex; gap: 1.75rem; }
+  .hotel-meta-item { font-size: 0.8rem; color: var(--muted); }
+  .hotel-meta-item strong { color: var(--ink); display: block; font-size: 0.88rem; font-weight: 500; }
+  .hotel-badge {
+    display: inline-block; background: var(--forest-pale);
+    color: var(--forest); font-size: 0.7rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; font-weight: 500;
+    margin-top: 0.75rem;
+  }
+
+  .rate-banner {
+    background: var(--gold-pale); border: 1px solid var(--border-mid);
+    border-radius: var(--r-lg); padding: 1.75rem 1.5rem;
+    margin: 2rem 0; text-align: center; position: relative;
+  }
+  .rate-banner .eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 0.5rem;
+  }
+  .rate-code {
+    font-family: var(--serif); font-size: 2.4rem; color: var(--gold);
+    letter-spacing: 0.14em; margin-bottom: 0.4rem;
+  }
+  .rate-note { font-size: 0.82rem; color: var(--muted); }
+  .book-btn {
+    display: inline-block; margin-top: 1.25rem;
+    padding: 0.8rem 2.2rem;
+    background: var(--gold); color: white;
+    border: none; border-radius: var(--r-sm);
+    font-family: var(--sans); font-size: 0.78rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 500; cursor: pointer; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .book-btn:hover { background: var(--gold-light); }
+
+  .shuttle-note {
+    background: var(--forest-ultra); border-left: 2.5px solid var(--forest-mid);
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    padding: 1rem 1.25rem; font-size: 0.86rem; color: var(--muted);
+    line-height: 1.75;
+  }
+  .shuttle-note strong { color: var(--forest); font-weight: 600; }
+
+  /* ─────────────────────────────
+     FOOD PAGE
+  ───────────────────────────── */
+  .station-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .station-item {
+    border: 1px solid var(--border-faint);
+    border-radius: var(--r-md); overflow: hidden;
+    background: var(--white); transition: border-color 0.2s;
+  }
+  .station-item.open { border-color: var(--border-mid); }
+  .station-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.15rem 1.25rem; cursor: pointer;
+    background: none; width: 100%; border: none;
+    font-family: var(--sans); text-align: left;
+  }
+  .station-toggle:hover { background: var(--cream); }
+  .station-icon-name { display: flex; align-items: center; gap: 1rem; }
+  .station-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--forest-pale); color: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
+    font-weight: 600; font-family: var(--sans); flex-shrink: 0;
+  }
+  .station-name { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); }
+  .station-sub { font-size: 0.76rem; color: var(--muted); margin-top: 0.1rem; }
+  .station-chevron {
+    width: 18px; height: 18px; border: 1px solid var(--border-mid);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 0.65rem; flex-shrink: 0;
+    transition: transform 0.25s; line-height: 1;
+  }
+  .station-item.open .station-chevron { transform: rotate(180deg); }
+  .station-menu {
+    display: none; padding: 0 1.25rem 1.25rem;
+    border-top: 0.5px solid var(--border-faint);
+    padding-top: 1rem;
+  }
+  .station-item.open .station-menu { display: block; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  @media (max-width: 380px) { .menu-grid { grid-template-columns: 1fr; } }
+  .menu-item {
+    padding: 0.55rem 0.85rem; background: var(--cream);
+    border-radius: var(--r-sm); font-size: 0.83rem; color: var(--ink-mid);
+  }
+  .menu-item::before { content: '◆'; font-size: 0.42rem; color: var(--gold); vertical-align: 2px; margin-right: 6px; }
+
+  /* ─────────────────────────────
+     MEMORY WALL PAGE
+  ───────────────────────────── */
+  .upload-zone {
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--r-xl); padding: 2.5rem 1.5rem;
+    text-align: center; background: var(--white);
+    margin-bottom: 2rem; cursor: pointer; transition: background 0.2s, border-color 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .upload-zone:hover { background: var(--forest-ultra); border-color: var(--forest-mid); }
+  #file-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-icon-glyph {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--forest-pale); margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--forest); font-size: 0.72rem;
+    font-weight: 600; letter-spacing: 0.04em;
+  }
+  .upload-zone h3 { font-family: var(--serif); color: var(--ink); margin-bottom: 0.3rem; }
+  .upload-zone p { font-size: 0.82rem; }
+  .upload-cta {
+    display: inline-block; margin-top: 1rem;
+    padding: 0.65rem 1.5rem;
+    background: var(--forest); color: var(--gold-light);
+    border-radius: var(--r-sm);
+    font-family: var(--sans); font-size: 0.75rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 500; pointer-events: none;
+  }
+  .gallery-label {
+    font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 0.75rem;
+  }
+  .photo-gallery { columns: 2; gap: 10px; }
+  @media (max-width: 380px) { .photo-gallery { columns: 1; } }
+  .gallery-item {
+    break-inside: avoid; margin-bottom: 10px;
+    border-radius: var(--r-md); overflow: hidden;
+    border: 1px solid var(--border-faint);
+  }
+  .gallery-item img { width: 100%; display: block; }
+  .gallery-placeholder {
+    aspect-ratio: 1; display: flex; align-items: center;
+    justify-content: center; color: var(--muted);
+    font-family: var(--serif); font-size: 0.78rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .gallery-placeholder:nth-child(3n+1) { aspect-ratio: 4/3; }
+  .gallery-placeholder:nth-child(3n+2) { aspect-ratio: 3/4; }
+
+  /* ─────────────────────────────
+     GIFT REGISTRY PAGE
+  ───────────────────────────── */
+  .gift-intro { text-align: center; margin-bottom: 2.5rem; }
+  .gift-intro .sub {
+    font-family: var(--serif); font-style: italic;
+    font-size: 1.1rem; line-height: 1.75; color: var(--muted);
+    max-width: 480px; margin: 0.75rem auto 0;
+  }
+  .gift-cards { display: flex; flex-direction: column; gap: 1rem; }
+  .gift-card {
+    background: var(--white); border: 1px solid var(--border-faint);
+    border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+  .gift-card:hover { box-shadow: var(--shadow-gold); }
+  .gift-card-header { padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .gift-icon {
+    width: 46px; height: 46px; border-radius: var(--r-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; flex-shrink: 0; font-family: var(--sans);
+    color: var(--forest); background: var(--forest-pale);
+  }
+  .gift-icon.h { background: #FFF0E6; color: #8A5A2A; }
+  .gift-icon.b { background: #F5F0FB; color: #6A3DAA; }
+  .gift-card-title { font-family: var(--serif); font-size: 1.3rem; color: var(--ink); margin-bottom: 0.2rem; }
+  .gift-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .gift-card-footer {
+    padding: 1rem 1.5rem; background: var(--cream);
+    border-top: 0.5px solid var(--border-faint);
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+  }
+  .gift-btn-primary {
+    flex: 1; min-width: 140px; padding: 0.85rem;
+    background: var(--forest); color: var(--gold-light);
+    border: none; border-radius: var(--r-sm);
+    font-family: var(--sans); font-size: 0.74rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 500; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .gift-btn-primary:hover { background: var(--forest-light); }
+  .gift-btn-secondary {
+    flex: 1; min-width: 120px; padding: 0.85rem;
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--border-mid); border-radius: var(--r-sm);
+    font-family: var(--sans); font-size: 0.74rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 500; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .gift-btn-secondary:hover { background: var(--cream); }
+  .gift-details { display: none; }
+  .gift-card.show-details .gift-details { display: block; }
+  .account-detail {
+    margin: 0 1.5rem 1.25rem;
+    background: var(--gold-pale); border: 1px solid var(--border-light);
+    border-radius: var(--r-md); padding: 1rem 1.1rem;
+    font-size: 0.88rem;
+  }
+  .acct-label {
+    font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 0.5rem;
+  }
+  .acct-row {
+    display: flex; justify-content: space-between;
+    margin-bottom: 0.28rem; align-items: baseline;
+  }
+  .acct-row span:first-child { color: var(--muted); font-size: 0.82rem; }
+  .acct-row span:last-child { color: var(--ink); font-weight: 500; font-family: var(--sans); font-size: 0.88rem; }
+  .copy-btn {
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--forest); background: none; border: 1px solid var(--border-mid);
+    border-radius: var(--r-sm); padding: 0.35rem 0.75rem;
+    cursor: pointer; font-weight: 500; margin-top: 0.65rem;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: var(--forest-pale); }
+
+  /* ─────────────────────────────
+     FOOTER
+  ───────────────────────────── */
+  footer {
+    text-align: center; padding: 2.5rem 1.5rem 4rem;
+    border-top: 0.5px solid var(--border-faint);
+    margin-top: 2rem;
+  }
+  .footer-brand {
+    font-family: var(--serif); font-size: 1.9rem; color: var(--forest);
+    letter-spacing: 0.2em; margin-bottom: 0.2rem;
+  }
+  .footer-brand span { color: var(--gold); }
+  footer p { font-size: 0.78rem; color: var(--muted-light); margin-top: 0.4rem; }
+
+  /* ─────────────────────────────
+     VISIBILITY
+  ───────────────────────────── */
+  #screen-access { display: flex; }
+  #app { display: none; }
+  body.logged-in #screen-access { display: none; }
+  body.logged-in #app { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ── ACCESS SCREEN ── -->
+<div id="screen-access" class="geo-bg">
+  <div class="access-box">
+    <div class="access-logo">K<span>O</span>LE</div>
+    <div class="access-tagline">A Celebration of Love &amp; Union</div>
+
+    <div class="access-card framed">
+      <div class="c tl"></div><div class="c tr"></div>
+      <div class="c bl"></div><div class="c br"></div>
+
+      <label class="access-label" for="guest-id">Guest Access</label>
+      <input
+        class="access-input"
+        id="guest-id"
+        type="text"
+        placeholder="Email address or phone number"
+        autocomplete="off"
+      />
+      <button class="access-btn" onclick="requestAccess()">
+        Request Access Pass
+      </button>
+      <p class="access-note">No password required. We'll verify your details and grant instant access.</p>
+    </div>
+
+    <div class="access-footer">
+      <div class="divider"><span>Kolade &amp; Oluwaseun</span></div>
+      <p>14 June 2026 &middot; Lagos, Nigeria</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-brand" onclick="goTo('home')">K<span>O</span>LE</span>
+      <ul class="nav-links" id="nav-links">
+        <li><button onclick="goTo('home')" data-page="home">Home</button></li>
+        <li><button onclick="goTo('accom')" data-page="accom">Accommodations</button></li>
+        <li><button onclick="goTo('food')" data-page="food">Food &amp; Drinks</button></li>
+        <li><button onclick="goTo('memory')" data-page="memory">Memories</button></li>
+        <li><button onclick="goTo('gifts')" data-page="gifts">Gift Registry</button></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── PAGE: HOME ── -->
+  <div class="page" id="page-home">
+    <div class="page-inner">
+
+      <div class="welcome-hero">
+        <div class="eyebrow">Welcome</div>
+        <h1>The Wedding of<br><em>Kolade &amp; Oluwaseun</em></h1>
+        <div class="guest-name" id="display-name">— Mrs. Adunola Okafor —</div>
+      </div>
+
+      <div class="qr-card framed">
+        <div class="c tl"></div><div class="c tr"></div>
+        <div class="c bl"></div><div class="c br"></div>
+        <div class="qr-label">Your Digital Entry Pass</div>
+        <div class="qr-frame">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="opacity:0.88">
+            <rect x="5" y="5" width="35" height="35" fill="none" stroke="#1E4D3A" stroke-width="3"/>
+            <rect x="14" y="14" width="17" height="17" fill="#1E4D3A"/>
+            <rect x="60" y="5" width="35" height="35" fill="none" stroke="#1E4D3A" stroke-width="3"/>
+            <rect x="69" y="14" width="17" height="17" fill="#1E4D3A"/>
+            <rect x="5" y="60" width="35" height="35" fill="none" stroke="#1E4D3A" stroke-width="3"/>
+            <rect x="14" y="69" width="17" height="17" fill="#1E4D3A"/>
+            <rect x="46" y="5" width="8" height="8" fill="#1E4D3A"/><rect x="46" y="18" width="8" height="8" fill="#1E4D3A"/><rect x="46" y="31" width="8" height="8" fill="#1E4D3A"/>
+            <rect x="5" y="46" width="8" height="8" fill="#1E4D3A"/><rect x="18" y="46" width="8" height="8" fill="#1E4D3A"/><rect x="31" y="46" width="8" height="8" fill="#1E4D3A"/>
+            <rect x="46" y="46" width="8" height="8" fill="#B8962E"/><rect x="60" y="46" width="8" height="8" fill="#1E4D3A"/><rect x="73" y="46" width="8" height="8" fill="#1E4D3A"/><rect x="86" y="46" width="8" height="8" fill="#1E4D3A"/>
+            <rect x="60" y="60" width="8" height="8" fill="#1E4D3A"/><rect x="73" y="60" width="8" height="8" fill="#B8962E"/><rect x="86" y="60" width="8" height="8" fill="#1E4D3A"/>
+            <rect x="60" y="73" width="8" height="8" fill="#1E4D3A"/><rect x="60" y="86" width="8" height="8" fill="#1E4D3A"/><rect x="73" y="73" width="8" height="8" fill="#1E4D3A"/><rect x="86" y="73" width="8" height="8" fill="#B8962E"/><rect x="86" y="86" width="8" height="8" fill="#1E4D3A"/>
+            <rect x="46" y="60" width="8" height="8" fill="#1E4D3A"/><rect x="46" y="73" width="8" height="8" fill="#1E4D3A"/><rect x="46" y="86" width="8" height="8" fill="#B8962E"/>
+          </svg>
+        </div>
+        <div class="qr-name" id="qr-name">Mrs. Adunola Okafor</div>
+        <div class="qr-instruction">Please present this pass at the venue entrance</div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="label">Table</div>
+          <div class="value">Table 7</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Seat</div>
+          <div class="value">Seat 3</div>
+        </div>
+      </div>
+
+      <div class="venue-card">
+        <div class="vcard-title">Venue Details</div>
+        <div class="venue-row">
+          <span class="v-icon">&#9679;</span>
+          <span>Eko Hotels &amp; Suites, Plot 1415 Adetokunbo Ademola Street, Victoria Island, Lagos</span>
+        </div>
+        <div class="venue-row">
+          <span class="v-icon">&#9632;</span>
+          <span><strong>Saturday, 14 June 2026</strong></span>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="map-btn">&#8599; Open in Maps</a>
+      </div>
+
+      <div class="timeline-section">
+        <div class="eyebrow" style="font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:500;">Order of Events</div>
+        <h2 style="margin-bottom:0.25rem;">Programme</h2>
+        <div class="divider"><span>14 June 2026</span></div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-time">9:00 AM</div>
+            <div class="tl-event">Guest Arrival &amp; Seating</div>
+            <div class="tl-desc">Welcome drinks served as guests find their seats</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">10:00 AM</div>
+            <div class="tl-event">Traditional Ceremony</div>
+            <div class="tl-desc">Introduction of families and exchange of traditional vows</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">12:00 PM</div>
+            <div class="tl-event">White Wedding</div>
+            <div class="tl-desc">Church blessing and exchange of rings at the main hall</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">1:30 PM</div>
+            <div class="tl-event">Reception &amp; Luncheon</div>
+            <div class="tl-desc">Celebratory lunch, speeches, and first dances</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">3:00 PM</div>
+            <div class="tl-event">Dinner Service</div>
+            <div class="tl-desc">Full dining experience — culinary stations open</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">5:00 PM</div>
+            <div class="tl-event">Afterparty</div>
+            <div class="tl-desc">Dancing, music, and celebrations continue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="geo-bg">
+      <div class="footer-brand">K<span>O</span>LE</div>
+      <div class="divider" style="max-width:300px;margin:0.75rem auto;"><span>with love</span></div>
+      <p>Kolade &amp; Oluwaseun &middot; 14 June 2026 &middot; Lagos, Nigeria</p>
+    </footer>
+  </div>
+
+  <!-- ── PAGE: ACCOMMODATIONS ── -->
+  <div class="page" id="page-accom">
+    <div class="page-inner">
+      <div class="page-header">
+        <div class="eyebrow">Where to Stay</div>
+        <h2>Accommodations</h2>
+        <p style="margin-top:0.5rem;">We have arranged preferential rates at a selection of hotels near the venue. All properties are a short drive from Eko Hotels. Please use the exclusive rate code below when booking.</p>
+      </div>
+
+      <div class="hotel-card">
+        <div class="hotel-header">
+          <div class="hotel-name">Eko Hotels &amp; Suites</div>
+          <div class="hotel-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="hotel-meta">
+          <div class="hotel-meta-item"><strong>On-site</strong>Venue Hotel</div>
+          <div class="hotel-meta-item"><strong>From &#8358;145,000</strong>per night</div>
+        </div>
+        <span class="hotel-badge">Event Rate Available</span>
+      </div>
+
+      <div class="hotel-card">
+        <div class="hotel-header">
+          <div class="hotel-name">Radisson Blu Anchorage</div>
+          <div class="hotel-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="hotel-meta">
+          <div class="hotel-meta-item"><strong>8 min</strong>from venue</div>
+          <div class="hotel-meta-item"><strong>From &#8358;118,000</strong>per night</div>
+        </div>
+        <span class="hotel-badge">Event Rate Available</span>
+      </div>
+
+      <div class="hotel-card">
+        <div class="hotel-header">
+          <div class="hotel-name">The Wheatbaker Hotel</div>
+          <div class="hotel-stars">&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="hotel-meta">
+          <div class="hotel-meta-item"><strong>12 min</strong>from venue</div>
+          <div class="hotel-meta-item"><strong>From &#8358;82,000</strong>per night</div>
+        </div>
+        <span class="hotel-badge">Event Rate Available</span>
+      </div>
+
+      <div class="hotel-card">
+        <div class="hotel-header">
+          <div class="hotel-name">Lagos Continental Hotel</div>
+          <div class="hotel-stars">&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="hotel-meta">
+          <div class="hotel-meta-item"><strong>15 min</strong>from venue</div>
+          <div class="hotel-meta-item"><strong>From &#8358;68,000</strong>per night</div>
+        </div>
+        <span class="hotel-badge">Event Rate Available</span>
+      </div>
+
+      <div class="rate-banner framed">
+        <div class="c tl"></div><div class="c tr"></div>
+        <div class="c bl"></div><div class="c br"></div>
+        <div class="eyebrow">Exclusive Rate Code</div>
+        <div class="rate-code">KOLE2026</div>
+        <div class="rate-note">Quote this code when booking to receive the discounted wedding guest rate. Valid 13–15 June 2026.</div>
+        <a href="#" class="book-btn">Book Your Room</a>
+      </div>
+
+      <div class="shuttle-note">
+        <strong>Complimentary Shuttle Service</strong><br>
+        Shuttle buses will run between all partner hotels and the venue on the day of the event. Departures from each hotel at 8:30 AM and 9:30 AM. Return shuttles available from 7:00 PM onward. Please inform your hotel concierge of your participation.
+      </div>
+    </div>
+    <footer class="geo-bg">
+      <div class="footer-brand">K<span>O</span>LE</div>
+      <div class="divider" style="max-width:300px;margin:0.75rem auto;"><span>with love</span></div>
+      <p>Kolade &amp; Oluwaseun &middot; 14 June 2026 &middot; Lagos, Nigeria</p>
+    </footer>
+  </div>
+
+  <!-- ── PAGE: FOOD & DRINKS ── -->
+  <div class="page" id="page-food">
+    <div class="page-inner">
+      <div class="page-header">
+        <div class="eyebrow">Culinary Experience</div>
+        <h2>Food &amp; Drinks</h2>
+        <p style="margin-top:0.5rem;">Our chefs have curated a celebration of Nigerian and international flavours. Select any station below to explore the full menu.</p>
+      </div>
+
+      <ul class="station-list">
+        <li class="station-item" id="s1">
+          <button class="station-toggle" onclick="toggleStation('s1')">
+            <div class="station-icon-name">
+              <div class="station-icon">Trad</div>
+              <div>
+                <div class="station-name">Traditional African Kitchen</div>
+                <div class="station-sub">Nigerian heritage cuisine</div>
+              </div>
+            </div>
+            <span class="station-chevron">&#9660;</span>
+          </button>
+          <div class="station-menu">
+            <div class="menu-grid">
+              <div class="menu-item">Jollof Rice (Party Style)</div>
+              <div class="menu-item">Fried Rice</div>
+              <div class="menu-item">Egusi Soup &amp; Fufu</div>
+              <div class="menu-item">Oha Soup &amp; Pounded Yam</div>
+              <div class="menu-item">Banga Stew &amp; Starch</div>
+              <div class="menu-item">Pepper Soup (Assorted)</div>
+              <div class="menu-item">Isi Ewu</div>
+              <div class="menu-item">Moi Moi &amp; Akara</div>
+              <div class="menu-item">Fried Plantain (Dodo)</div>
+              <div class="menu-item">Nkwobi</div>
+            </div>
+          </div>
+        </li>
+
+        <li class="station-item" id="s2">
+          <button class="station-toggle" onclick="toggleStation('s2')">
+            <div class="station-icon-name">
+              <div class="station-icon">Grill</div>
+              <div>
+                <div class="station-name">Grill &amp; Suya Station</div>
+                <div class="station-sub">Live fire, smoked perfection</div>
+              </div>
+            </div>
+            <span class="station-chevron">&#9660;</span>
+          </button>
+          <div class="station-menu">
+            <div class="menu-grid">
+              <div class="menu-item">Beef Suya</div>
+              <div class="menu-item">Chicken Suya</div>
+              <div class="menu-item">Grilled Tilapia</div>
+              <div class="menu-item">BBQ Pork Ribs</div>
+              <div class="menu-item">Asun (Spicy Goat)</div>
+              <div class="menu-item">Shrimp Skewers</div>
+            </div>
+          </div>
+        </li>
+
+        <li class="station-item" id="s3">
+          <button class="station-toggle" onclick="toggleStation('s3')">
+            <div class="station-icon-name">
+              <div class="station-icon">Bites</div>
+              <div>
+                <div class="station-name">Small Chops &amp; Starters</div>
+                <div class="station-sub">Light bites &amp; passed hors d'oeuvres</div>
+              </div>
+            </div>
+            <span class="station-chevron">&#9660;</span>
+          </button>
+          <div class="station-menu">
+            <div class="menu-grid">
+              <div class="menu-item">Puff Puff</div>
+              <div class="menu-item">Spring Rolls</div>
+              <div class="menu-item">Samosa</div>
+              <div class="menu-item">Mini Beef Rolls</div>
+              <div class="menu-item">Chicken Lollipop</div>
+              <div class="menu-item">Peppered Gizzard</div>
+              <div class="menu-item">Egg Rolls</div>
+              <div class="menu-item">Fish Rolls</div>
+            </div>
+          </div>
+        </li>
+
+        <li class="station-item" id="s4">
+          <button class="station-toggle" onclick="toggleStation('s4')">
+            <div class="station-icon-name">
+              <div class="station-icon">Sweet</div>
+              <div>
+                <div class="station-name">Dessert &amp; Confectionery</div>
+                <div class="station-sub">Sweet endings</div>
+              </div>
+            </div>
+            <span class="station-chevron">&#9660;</span>
+          </button>
+          <div class="station-menu">
+            <div class="menu-grid">
+              <div class="menu-item">Wedding Cake</div>
+              <div class="menu-item">Chin Chin</div>
+              <div class="menu-item">Coconut Candy</div>
+              <div class="menu-item">Zobo Sorbet</div>
+              <div class="menu-item">Chocolate Fountain</div>
+              <div class="menu-item">Fruit Tarts</div>
+            </div>
+          </div>
+        </li>
+
+        <li class="station-item" id="s5">
+          <button class="station-toggle" onclick="toggleStation('s5')">
+            <div class="station-icon-name">
+              <div class="station-icon">Bar</div>
+              <div>
+                <div class="station-name">Cocktail &amp; Refreshment Bar</div>
+                <div class="station-sub">Signature drinks &amp; soft options</div>
+              </div>
+            </div>
+            <span class="station-chevron">&#9660;</span>
+          </button>
+          <div class="station-menu">
+            <div class="menu-grid">
+              <div class="menu-item">Zobo &amp; Ginger Cooler</div>
+              <div class="menu-item">Chapman Classic</div>
+              <div class="menu-item">Kunu &amp; Fura Da Nono</div>
+              <div class="menu-item">Fresh Coconut Water</div>
+              <div class="menu-item">Signature K&amp;O Cocktail</div>
+              <div class="menu-item">Palm Wine (Premium)</div>
+              <div class="menu-item">Assorted Wines</div>
+              <div class="menu-item">Champagne &amp; Sparkling</div>
+              <div class="menu-item">Soft Drinks &amp; Juices</div>
+              <div class="menu-item">Still &amp; Sparkling Water</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <footer class="geo-bg">
+      <div class="footer-brand">K<span>O</span>LE</div>
+      <div class="divider" style="max-width:300px;margin:0.75rem auto;"><span>with love</span></div>
+      <p>Kolade &amp; Oluwaseun &middot; 14 June 2026 &middot; Lagos, Nigeria</p>
+    </footer>
+  </div>
+
+  <!-- ── PAGE: MEMORY WALL ── -->
+  <div class="page" id="page-memory">
+    <div class="page-inner">
+      <div class="page-header">
+        <div class="eyebrow">Share the Moment</div>
+        <h2>Memory Wall</h2>
+        <p style="margin-top:0.5rem;">Capture the joy. Every photo you share joins our collective memory of this beautiful day.</p>
+      </div>
+
+      <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+        <input type="file" id="file-input" accept="image/*" multiple onchange="handleUpload(event)">
+        <div class="upload-icon-glyph">&#43;</div>
+        <h3>Share Your Photos</h3>
+        <p>Tap to select photos from your gallery</p>
+        <span class="upload-cta">Choose Photos</span>
+      </div>
+
+      <div class="gallery-label">Guest Gallery</div>
+      <div class="photo-gallery" id="photo-gallery">
+        <div class="gallery-item"><div class="gallery-placeholder" style="background:#EAF3EF;">Memories</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="background:#FBF6EC;">Moments</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="background:#F5F0FB;">Joy</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="background:#EAF3EF;">Love</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="background:#FBF6EC;">Celebration</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder" style="background:#EAF3EF;">Union</div></div>
+      </div>
+    </div>
+    <footer class="geo-bg">
+      <div class="footer-brand">K<span>O</span>LE</div>
+      <div class="divider" style="max-width:300px;margin:0.75rem auto;"><span>with love</span></div>
+      <p>Kolade &amp; Oluwaseun &middot; 14 June 2026 &middot; Lagos, Nigeria</p>
+    </footer>
+  </div>
+
+  <!-- ── PAGE: GIFT REGISTRY ── -->
+  <div class="page" id="page-gifts">
+    <div class="page-inner">
+      <div class="gift-intro">
+        <div class="eyebrow" style="font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:500;">Gift Registry</div>
+        <h2>Bless the Couple</h2>
+        <p class="sub">Your presence is our greatest gift. Should you wish to honour Kolade and Oluwaseun with a monetary contribution, every act of generosity is received with deep gratitude and joy.</p>
+      </div>
+
+      <div class="gift-cards">
+
+        <div class="gift-card" id="gc1">
+          <div class="gift-card-header">
+            <div class="gift-icon h">HMN</div>
+            <div>
+              <div class="gift-card-title">Honeymoon Fund</div>
+              <div class="gift-card-desc">Help Kolade and Oluwaseun create unforgettable memories on their dream honeymoon to the Maldives.</div>
+            </div>
+          </div>
+          <div class="gift-details" id="gd1">
+            <div class="account-detail">
+              <div class="acct-label">Bank Transfer Details</div>
+              <div class="acct-row"><span>Bank</span><span>Zenith Bank</span></div>
+              <div class="acct-row"><span>Account Name</span><span>Kolade O. Adeyemi</span></div>
+              <div class="acct-row"><span>Account Number</span><span>2034 567 891</span></div>
+              <div class="acct-row"><span>Reference</span><span>KOLE-HONEY</span></div>
+              <button class="copy-btn" onclick="copyDetails('Zenith Bank | 2034567891 | KOLE-HONEY')">Copy Details</button>
+            </div>
+          </div>
+          <div class="gift-card-footer">
+            <button class="gift-btn-primary" onclick="toggleGiftDetails('gc1','gd1')">Send via Bank Transfer</button>
+            <button class="gift-btn-secondary">Pay with Card</button>
+          </div>
+        </div>
+
+        <div class="gift-card" id="gc2">
+          <div class="gift-card-header">
+            <div class="gift-icon">HOME</div>
+            <div>
+              <div class="gift-card-title">New Home Fund</div>
+              <div class="gift-card-desc">Contribute to the couple's nest — helping them build a beautiful home together as they begin this new chapter.</div>
+            </div>
+          </div>
+          <div class="gift-details" id="gd2">
+            <div class="account-detail">
+              <div class="acct-label">Bank Transfer Details</div>
+              <div class="acct-row"><span>Bank</span><span>GTBank</span></div>
+              <div class="acct-row"><span>Account Name</span><span>Oluwaseun F. Adeyemi</span></div>
+              <div class="acct-row"><span>Account Number</span><span>0129 834 562</span></div>
+              <div class="acct-row"><span>Reference</span><span>KOLE-HOME</span></div>
+              <button class="copy-btn" onclick="copyDetails('GTBank | 0129834562 | KOLE-HOME')">Copy Details</button>
+            </div>
+          </div>
+          <div class="gift-card-footer">
+            <button class="gift-btn-primary" onclick="toggleGiftDetails('gc2','gd2')">Send via Bank Transfer</button>
+            <button class="gift-btn-secondary">Pay with Card</button>
+          </div>
+        </div>
+
+        <div class="gift-card" id="gc3">
+          <div class="gift-card-header">
+            <div class="gift-icon b">BLSS</div>
+            <div>
+              <div class="gift-card-title">Bless the Couple</div>
+              <div class="gift-card-desc">A general blessing gift — any amount you give is an act of love that will be cherished for a lifetime.</div>
+            </div>
+          </div>
+          <div class="gift-details" id="gd3">
+            <div class="account-detail">
+              <div class="acct-label">Bank Transfer Details</div>
+              <div class="acct-row"><span>Bank</span><span>First Bank</span></div>
+              <div class="acct-row"><span>Account Name</span><span>Kolade &amp; Oluwaseun Adeyemi</span></div>
+              <div class="acct-row"><span>Account Number</span><span>3088 245 710</span></div>
+              <div class="acct-row"><span>Reference</span><span>KOLE-BLESS</span></div>
+              <button class="copy-btn" onclick="copyDetails('First Bank | 3088245710 | KOLE-BLESS')">Copy Details</button>
+            </div>
+          </div>
+          <div class="gift-card-footer">
+            <button class="gift-btn-primary" onclick="toggleGiftDetails('gc3','gd3')">Send via Bank Transfer</button>
+            <button class="gift-btn-secondary">Pay with Card</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <footer class="geo-bg">
+      <div class="footer-brand">K<span>O</span>LE</div>
+      <div class="divider" style="max-width:300px;margin:0.75rem auto;"><span>with love</span></div>
+      <p>Kolade &amp; Oluwaseun &middot; 14 June 2026 &middot; Lagos, Nigeria</p>
+    </footer>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+  /* ── ACCESS ── */
+  function requestAccess() {
+    const input = document.getElementById('guest-id');
+    const val = input.value.trim();
+    if (!val) {
+      input.classList.add('error');
+      input.placeholder = 'Please enter your email or phone';
+      return;
+    }
+    document.body.classList.add('logged-in');
+    goTo('home');
+  }
+  document.getElementById('guest-id').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') requestAccess();
+    this.classList.remove('error');
+  });
+
+  /* ── PAGE NAVIGATION ── */
+  const pages = ['home','accom','food','memory','gifts'];
+  let currentPage = 'home';
+
+  function goTo(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const btn = document.querySelector(`[data-page="${id}"]`);
+    if (btn) btn.classList.add('active');
+    currentPage = id;
+    window.scrollTo(0, 0);
+    closeMenu();
+  }
+
+  /* ── HAMBURGER ── */
+  function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('nav-links').classList.remove('open');
+  }
+
+  /* ── FOOD STATIONS ── */
+  function toggleStation(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* ── GIFT DETAILS ── */
+  function toggleGiftDetails(cardId, detailId) {
+    const card = document.getElementById(cardId);
+    const isOpen = card.classList.contains('show-details');
+    document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('show-details'));
+    if (!isOpen) card.classList.add('show-details');
+  }
+
+  /* ── PHOTO UPLOAD ── */
+  function handleUpload(event) {
+    const files = Array.from(event.target.files);
+    const gallery = document.getElementById('photo-gallery');
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = 'Guest photo';
+        div.appendChild(img);
+        gallery.prepend(div);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* ── COPY BANK DETAILS ── */
+  function copyDetails(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      document.querySelectorAll('.copy-btn').forEach(b => {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(text.split('|')[1].trim())) {
+          const orig = b.textContent;
+          b.textContent = 'Copied';
+          b.style.color = 'var(--forest)';
+          setTimeout(() => { b.textContent = orig; b.style.color = ''; }, 2000);
+        }
+      });
+    }).catch(() => { alert('Details: ' + text); });
+  }
+
+  /* ── NAV BRAND CLICK ── */
+  document.querySelector('.nav-brand').addEventListener('click', () => goTo('home'));
+</script>
+</body>
+</html>
